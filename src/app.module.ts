@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { DatabaseModule } from './common/database/database.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
+import { TaskModule } from './modules/task/task.module';
 
 @Module({
   // TODO: add other modules that you will create
@@ -26,6 +27,7 @@ import * as Joi from 'joi';
         POSTGRES_DB: Joi.string().required(),
       }),
     }),
+    TaskModule,
   ],
   controllers: [],
   providers: [],
