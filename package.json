@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "codegen": "pnpm kysely-codegen --out-file ./src/common/database/types/db.d.ts",
+    "codegen": "npm kysely-codegen --out-file ./src/common/database/types/db.d.ts",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "migrations": "ts-node ./src/common/database/runMigrations.ts",
     "start": "nest start",

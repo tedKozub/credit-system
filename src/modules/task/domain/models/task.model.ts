@@ -1,4 +1,4 @@
-import { IEntity } from '../shared/IEntity';
+import { IEntity } from '../../../shared/IEntity';
 
 type TaskModelData = {
   id: number;
