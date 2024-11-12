@@ -3,6 +3,7 @@ import { DatabaseModule } from './common/database/database.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { TaskModule } from './modules/task/task.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   // TODO: add other modules that you will create
@@ -28,6 +29,7 @@ import { TaskModule } from './modules/task/task.module';
       }),
     }),
     TaskModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],

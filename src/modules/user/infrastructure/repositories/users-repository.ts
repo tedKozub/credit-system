@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Kysely } from 'kysely';
 import { DB } from 'src/common/database/types/db';
 import { CreateUserDto } from '../../application/dtos/create-user.dto';
+import { User } from '../../domain/user.model';
+import { isDatabaseError } from 'src/common/database/types/database-error';
+import { PostgresErrorCode } from 'src/common/database/types/postgres-error-code.enum';
 
 @Injectable()
-export class TasksRepository {
+export class UsersRepository {
   constructor(private db: Kysely<DB>) {}
 
   async insert(userData: CreateUserDto) {
@@ -13,12 +16,12 @@ export class TasksRepository {
         .insertInto('users')
         .values({
           name: userData.name,
-          credit: 
+          credit: userData.credit,
         })
         .returningAll()
         .executeTakeFirstOrThrow();
 
-      return new Task(databaseResponse);
+      return new User(databaseResponse);
     } catch (error) {
       if (
         isDatabaseError(error) &&
@@ -30,15 +33,15 @@ export class TasksRepository {
     }
   }
 
-  async findById(id: number): Promise<Task | undefined> {
+  async findById(id: number): Promise<User | undefined> {
     const databaseResponse = await this.db
-      .selectFrom('tasks')
+      .selectFrom('users')
       .selectAll()
       .where('id', '=', id)
       .executeTakeFirst();
 
     if (databaseResponse) {
-      return new Task(databaseResponse);
+      return new User(databaseResponse);
     }
   }
 }

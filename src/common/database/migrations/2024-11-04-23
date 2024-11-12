@@ -1,0 +1,25 @@
+import { Kysely } from 'kysely';
+import { DB } from '../../../common/database/types/db';
+
+export async function up(database: Kysely<DB>): Promise<void> {
+  await database.schema
+    .createTable('user')
+    .addColumn('id', 'serial', (column) => column.primaryKey().autoIncrement())
+    .addColumn('name', 'text', (column) => column.notNull())
+    .addColumn('credit', 'numeric', (column) => column.notNull())
+    .execute();
+
+  await database.schema
+    .createTable('task')
+    .addColumn('id', 'serial', (column) => column.primaryKey().autoIncrement())
+    .addColumn('name', 'text', (column) => column.notNull())
+    .addColumn('created_at', 'date', (column) => column.notNull())
+    .addColumn('idkwhat', 'varchar', (column) => column.notNull())
+    .execute();
+}
+
+// we probably don't want to drop any tables for production db, but so be it
+export async function down(database: Kysely<unknown>): Promise<void> {
+  await database.schema.dropTable('user').execute();
+  await database.schema.dropTable('task').execute();
+}
