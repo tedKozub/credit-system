@@ -3,17 +3,17 @@ import {
   ConfigurableDatabaseModule,
   DATABASE_OPTIONS,
 } from './database.module-definition';
-import { DatabaseOptions } from './database-options';
+import { DatabaseOptions } from './types/database-options';
 import { Pool } from 'pg';
-import { PostgresDialect } from 'kysely';
-import { Database } from './database';
+import { Kysely, PostgresDialect } from 'kysely';
+import { DB } from './types/db';
 
 @Global()
 @Module({
-  exports: [Database],
+  exports: [Kysely],
   providers: [
     {
-      provide: Database,
+      provide: Kysely,
       inject: [DATABASE_OPTIONS],
       useFactory: (databaseOptions: DatabaseOptions) => {
         const dialect = new PostgresDialect({
@@ -26,7 +26,7 @@ import { Database } from './database';
           }),
         });
 
-        return new Database({
+        return new Kysely<DB>({
           dialect,
         });
       },
